@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Anton|Pragati+Narrow" rel="stylesheet">
+    <link rel="icon" href="icon.jpg">
+    <title>Psychic Game</title>
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="header">Computer Psychic Game</h1>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <hr>
+                            <p class="text">Press any key on the board and see if you can guess what the computer is thinking!
+                                You're limited to ten guesses, an alert will pop up to let you know if you've won or lost.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-lg-6 text">
+                                    <p id="wins-text">Wins</p>
+                                    <p id="losses-text">Losses</p>
+                                    <p id="guessesmade-text">Guesses Made</p>
+                                    <p id="guessesleft-text">Your Guesses so Far</p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+
+        var choices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+        var wins;
+        var losses;
+        var guessesMade;
+        var pastGuesses = [];
+        var computerGuess;
+        var userGuess;
+
+        // var directionsText = document.getElementById("directions-text");
+        var winsText = document.getElementById("wins-text");
+        var lossesText = document.getElementById("losses-text");
+        var guessesMadeText = document.getElementById("guessesmade-text");
+        var guessesLeftText = document.getElementById("guessesleft-text");
+
+        //Sets up a blank slate for first game.
+        function initialize(word) {
+            wins = 0;
+            losses = 0;
+            pastGuesses = [];
+            guessesMade = pastGuesses.length;
+            computerGuess = choices[Math.floor(Math.random() * choices.length)];
+            console.log(word)
+        }
+
+        //sets up a blank slate for following games without resetting wins & losses
+        function setup() {
+            pastGuesses = [];
+            guessesMade = pastGuesses.length;
+            computerGuess = choices[Math.floor(Math.random() * choices.length)];
+        }
+
+        initialize("game started");
+
+        document.onkeyup = function (event) {
+
+
+
+            var userGuess = event.key.toLowerCase();
+            pastGuesses.push(userGuess);
+            guessesMade = pastGuesses.length
+
+
+            if (choices.indexOf(userGuess) > -1) {
+
+                if (userGuess == computerGuess) {
+                    wins++;
+                    alert("You Win!")
+                    setup();
+                } else {
+                    if (guessesMade > 10) {
+                        losses++;
+                        alert("Sorry, Better Luck Next time")
+                        setup();
+                    }
+                }
+            }
+
+            // directionsText.textContent = "";
+
+            winsText.textContent = "Wins: " + wins;
+            lossesText.textContent = "Losses: " + losses;
+            guessesMadeText.textContent = "Guesses Made: " + guessesMade;
+            guessesLeftText.textContent = "Your Guesses so Far: " + pastGuesses;
+
+        };
+
+    </script>
+</body>
+
+</html>
